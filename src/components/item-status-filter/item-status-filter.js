@@ -19,25 +19,39 @@ import './item-status-filter.css'
 
 export default class ItemStatusFilter extends Component {
 
+   buttons = [
+      { name: 'all', label: 'All' },
+      { name: 'active', label: 'Active' },
+      { name: 'done', label: 'Done' }
+   ]
+
+
 
 
    render() {
-      return (
-         <div className="btn-group">
-            <button type="button"
-               className="btn btn-info"
-               onClick={() => this.props.onStatusChange('')}
-            >All</button>
-            <button type="button"
-               className="btn btn-outline-secondary"
-               onClick={() => this.props.onStatusChange('0')}
-            >Active</button>
-            <button type="button"
-               className="btn btn-outline-secondary"
-               onClick={() => this.props.onStatusChange('1')}
-            >Done</button>
-         </div>
 
+      const { filter, onFilterChange } = this.props;
+
+
+      const tagButtons = this.buttons.map(({ name, label }) => {
+
+         let classNames = (name === filter) ? 'btn btn-info' : 'btn btn-outline-secondary';
+
+         return (
+            <button key={name}
+               type="button"
+               className={classNames}
+               onClick={() => onFilterChange(name)} >
+               {label}
+            </button>
+         )
+
+      })
+
+      return (
+         <div className="btn-group" >
+            {tagButtons}
+         </div>
       )
    }
 }
